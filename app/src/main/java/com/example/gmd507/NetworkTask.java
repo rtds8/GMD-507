@@ -61,8 +61,45 @@ public class NetworkTask extends AsyncTask<Object, Object, Object> {
             }
 
             // TODO: complete this parsing
-        }
 
+            if (responseObject.has("main")) {
+                JSONObject mainObject = responseObject.getJSONObject("main");
+
+                double temp = mainObject.getDouble("temp");
+                double tempFeelLike = mainObject.getDouble("feels_like");
+                double tempMin = mainObject.getDouble("temp_min");
+                double tempMax = mainObject.getDouble("temp_max");
+                double pressure = mainObject.getDouble("pressure");
+                double humidity = mainObject.getDouble("humidity");
+
+                this.infoObject.setTemp(temp);
+                this.infoObject.setTempFeelLike(tempFeelLike);
+                this.infoObject.setTempMin(tempMin);
+                this.infoObject.setTempMax(tempMax);
+                this.infoObject.setPressure(pressure);
+                this.infoObject.setHumidity(humidity);
+            }
+
+            if (responseObject.has("wind")) {
+                JSONObject windObject = responseObject.getJSONObject("wind");
+
+                double windSpeed = windObject.getDouble("speed");
+                double windDegree = windObject.getDouble("deg");
+
+                this.infoObject.setWindSpeed(windSpeed);
+                this.infoObject.setWindDeg(windDegree);
+            }
+
+            if (responseObject.has("sys")) {
+                JSONObject sysObject = responseObject.getJSONObject("sys");
+
+                long sunRise = sysObject.getLong("sunrise");
+                long sunSet = sysObject.getLong("sunset");
+
+                this.infoObject.setSunrise(sunRise);
+                this.infoObject.setSunset(sunSet);
+            }
+        }
         return null;
     }
 
